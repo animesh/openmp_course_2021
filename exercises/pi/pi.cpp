@@ -8,7 +8,7 @@ int main()
     const double pi = std::acos(-1.0);
 
     double sum = 0.0;
-
+    #pragma omp parallel for reduction(+:sum)
     for(int i=0; i<steps; i++)
     {
         double x = (i-0.5) * dx;

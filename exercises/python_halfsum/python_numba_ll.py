@@ -1,11 +1,11 @@
 #pip install numba
-from numba import jit
+from numba import njit,prange
 
-@jit()
-def func1(nopython=True):
+@njit(parallel=True)
+def func1():
     j=0
     print('func1: starting')
-    for i in range(1,300000001):
+    for i in range(1,3000000000000000000):
         j=j+i/2
     print('func1: finishing',j)
 

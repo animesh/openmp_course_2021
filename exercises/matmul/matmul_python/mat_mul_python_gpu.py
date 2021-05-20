@@ -4,7 +4,7 @@ from numpy.random import seed
 from numpy.random import rand
 from numba import jit,cuda
 
-size_array=4096
+size_array=64
 size_vec=size_array*size_array
 validate=True
 
@@ -26,7 +26,7 @@ def mat_mul(a,b,c,size):
         c[row*size+col]+=a[row*size+i]*b[i*size+col]
 
 
-threadsperblock = (16,16)
+threadsperblock = (8,8)
 blockspergrid_x = int(np.ceil(size_array / threadsperblock[0]))
 blockspergrid_y = int(np.ceil(size_array / threadsperblock[1]))
 blockspergrid = (blockspergrid_x, blockspergrid_y)
@@ -40,7 +40,7 @@ start=time.time()
 mat_mul[blockspergrid, threadsperblock](a,b,c,size_array)
 end=time.time()
 print('Elapsed time: ',end-start)
-  
+
 if(validate):
     a2d=np.reshape(a,(size_array,-1))
     b2d=np.reshape(b,(size_array,-1))
